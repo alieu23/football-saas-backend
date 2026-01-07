@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: football_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: football_saas_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: alieu123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: football_api
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PORT: 4000
+      JWT_SECRET: 2592b02275ed9366c737a3dea1ff9f8d9ace23db8259b772b0b90173bf4a1fdac2fd531815d81d52cb1b779c8fa4ca82ec9285ccf46d90a99798173f8fe3a957
+      # Use the service name "db" as hostname inside docker network
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: football_saas_db
+      DB_USER: postgres
+      DB_PASSWORD: alieu123
+      # Optional: logging
+      DB_LOGGING: "false"
+    ports:
+      - "4000:4000"
+    volumes:
+      # Persist uploaded PDFs
+      - ./uploads:/app/uploads
+
+volumes:
+  postgres_data:
