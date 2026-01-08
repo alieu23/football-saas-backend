@@ -4,7 +4,8 @@ import {
   listClubs,
   assignClubAdmin,
   getMyClub,
-  uploadClubLogo
+  uploadClubLogo,
+  getClubAdmins
 } from "../controllers/club.controller";
 import {
   requireAuth,
@@ -28,6 +29,13 @@ clubRoutes.get(
   requireAuth,
   requireRole([UserRole.SUPER_ADMIN]),
   listClubs
+);
+
+clubRoutes.get(
+  "/club-admins",
+  requireAuth,
+  requireRole([UserRole.SUPER_ADMIN]),
+  getClubAdmins
 );
 
 clubRoutes.post(

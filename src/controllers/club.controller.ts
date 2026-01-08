@@ -92,6 +92,25 @@ export async function assignClubAdmin(req: Request, res: Response) {
   });
 }
 
+
+
+
+/* -----------------------
+   GET CLUB ADMINS (SUPER_ADMIN)
+----------------------- */
+
+export async function getClubAdmins(req: Request, res: Response) {
+  const clubId = req.query.clubId as string;
+  const admins = await User.findAll({
+    where: {
+      clubId: clubId,
+      role: UserRole.CLUB_ADMIN
+    }
+  });
+
+  res.json(admins);
+};
+
 /* -----------------------
    GET MY CLUB (CLUB_ADMIN)
 ----------------------- */

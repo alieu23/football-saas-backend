@@ -17,7 +17,7 @@ export const sequelize = new Sequelize({
   port: Number(process.env.DB_PORT || 5432),
   database: process.env.DB_NAME || "football_saas_db",
   username: process.env.DB_USER || "postgres",
-  password: process.env.DB_PASSWORD || "alieu123",
+  password: process.env.DB_PASSWORD || "admin123",
   logging: (process.env.DB_LOGGING || "false") === "true" ? console.log : false,
   models: [
     Club,
